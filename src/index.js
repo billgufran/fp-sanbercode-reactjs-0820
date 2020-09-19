@@ -1,8 +1,10 @@
 import CssBaseline from "@material-ui/core/CssBaseline";
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
 import App from "./App";
-import AuthProvider from "./components/AuthContext";
+import AuthProvider from "./components/Context/AuthContext";
+import NavProvider from "./components/Context/NavContext";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 
@@ -10,7 +12,11 @@ ReactDOM.render(
 	<React.StrictMode>
 		<CssBaseline />
 		<AuthProvider>
-			<App />
+			<BrowserRouter>
+				<NavProvider>
+					<App />
+				</NavProvider>
+			</BrowserRouter>
 		</AuthProvider>
 	</React.StrictMode>,
 	document.getElementById("root")

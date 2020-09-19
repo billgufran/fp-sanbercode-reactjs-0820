@@ -14,6 +14,7 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import MovieIcon from "@material-ui/icons/Movie";
 import GameIcon from "@material-ui/icons/SportsEsports";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
 	nested: {
@@ -30,24 +31,30 @@ export function PublicList() {
 				</ListSubheader>
 			}
 		>
-			<ListItem button>
-				<ListItemIcon>
-					<AppsIcon />
-				</ListItemIcon>
-				<ListItemText primary={"All list"} />
-			</ListItem>
-			<ListItem button>
-				<ListItemIcon>
-					<MovieIcon />
-				</ListItemIcon>
-				<ListItemText primary={"Movie list"} />
-			</ListItem>
-			<ListItem button>
-				<ListItemIcon>
-					<GameIcon />
-				</ListItemIcon>
-				<ListItemText primary={"Game list"} />
-			</ListItem>
+			<Link to="/">
+				<ListItem button>
+					<ListItemIcon>
+						<AppsIcon />
+					</ListItemIcon>
+					<ListItemText primary={"All list"} />
+				</ListItem>
+			</Link>
+			<Link to="/movies">
+				<ListItem button>
+					<ListItemIcon>
+						<MovieIcon />
+					</ListItemIcon>
+					<ListItemText primary={"Movie list"} />
+				</ListItem>
+			</Link>
+			<Link to="/games">
+				<ListItem button>
+					<ListItemIcon>
+						<GameIcon />
+					</ListItemIcon>
+					<ListItemText primary={"Game list"} />
+				</ListItem>
+			</Link>
 		</List>
 	);
 }
@@ -64,7 +71,13 @@ export function PrivateList() {
 	return (
 		<>
 			<Divider />
-			<List>
+			<List
+				subheader={
+					<ListSubheader component="div" id="nested-list-subheader">
+						Manage content
+					</ListSubheader>
+				}
+			>
 				<ListItem button onClick={handleClick}>
 					<ListItemIcon>
 						<EditIcon />

@@ -1,15 +1,18 @@
-import { Button } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import React from 'react';
+import { Button } from "@material-ui/core";
+import IconButton from "@material-ui/core/IconButton";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../Context/AuthContext";
 
 export function AvatarButton() {
-   const [anchorEl, setAnchorEl] = React.useState(null);
+	const {setIsLoggedIn} = useContext(AuthContext);
+	const [anchorEl, setAnchorEl] = useState(null);
 	const open = Boolean(anchorEl);
 
-   const handleMenu = (event) => {
+	const handleMenu = event => {
 		setAnchorEl(event.currentTarget);
 	};
 
@@ -17,6 +20,7 @@ export function AvatarButton() {
 		setAnchorEl(null);
 	};
 
+	const logout = () => setIsLoggedIn(false);
 
 	return (
 		<div>
@@ -46,13 +50,16 @@ export function AvatarButton() {
 			>
 				<MenuItem onClick={handleClose}>Profile</MenuItem>
 				<MenuItem onClick={handleClose}>My account</MenuItem>
+				<MenuItem onClick={logout}>Logout</MenuItem>
 			</Menu>
 		</div>
 	);
 }
 
 export function LoginButton() {
-   return(
-      <Button variant="outlined">Login</Button>
-   )
+	return (
+		<Link to="/login">
+			<Button variant="outlined">Login</Button>
+		</Link>
+	);
 }

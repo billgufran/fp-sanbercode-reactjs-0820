@@ -3,7 +3,9 @@ import Drawer from "@material-ui/core/Drawer";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../Context/AuthContext";
+import { NavContext } from "../Context/NavContext";
 import { PrivateList, PublicList } from "./Sidebar-element";
 
 const drawerWidth = 240;
@@ -29,11 +31,13 @@ const useStyles = makeStyles(theme => ({
 	},
 }));
 
-export default function Sidebar(props) {
+export default function Sidebar() {
+	const {open, setOpen} = useContext(NavContext);
+	const {isLoggedIn} = useContext(AuthContext);
 	const classes = useStyles();
 
 	const handleDrawerClose = () => {
-		props.setOpen(false);
+		setOpen(false);
 	};
 
 	return (
@@ -42,7 +46,7 @@ export default function Sidebar(props) {
 				className={classes.drawer}
 				variant="persistent"
 				anchor="left"
-				open={props.open}
+				open={open}
 				classes={{
 					paper: classes.drawerPaper,
 				}}
@@ -53,10 +57,8 @@ export default function Sidebar(props) {
 					</IconButton>
 				</div>
 				<Divider />
-				<PublicList/>
-				{/* isLoggedIn */}
-				<PrivateList/>
-				{/* isLoggedIn */}
+				<PublicList />
+				{isLoggedIn && <PrivateList />}
 			</Drawer>
 		</>
 	);

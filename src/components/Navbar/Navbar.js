@@ -6,7 +6,8 @@ import Typography from "@material-ui/core/Typography";
 import MenuIcon from "@material-ui/icons/Menu";
 import clsx from "clsx";
 import React, { useContext } from "react";
-import { AuthContext } from "../AuthContext";
+import { AuthContext } from "../Context/AuthContext";
+import { NavContext } from "../Context/NavContext";
 import { AvatarButton, LoginButton } from "./Navbar-element";
 
 const drawerWidth = 240;
@@ -28,6 +29,9 @@ const useStyles = makeStyles(theme => ({
 			easing: theme.transitions.easing.easeOut,
 			duration: theme.transitions.duration.enteringScreen,
 		}),
+	},
+	appBarHide: {
+		display: 'none',
 	},
 	menuButton: {
 		marginRight: theme.spacing(2),
@@ -53,19 +57,22 @@ const useStyles = makeStyles(theme => ({
 	},
 }));
 
-export default function Navbar(props) {
+export default function Navbar() {
 	const classes = useStyles();
-	const {isLoggedIn, setIsLoggedIn} = useContext(AuthContext);
+	const { isLoggedIn } = useContext(AuthContext);
+	const {open, setOpen, navVisible} = useContext(NavContext);
 
 	const handleDrawerOpen = () => {
-		props.setOpen(true);
+		setOpen(true);
 	};
 
 	return (
 		<AppBar
 			position="fixed"
-			className={clsx(classes.appBar, {
-				[classes.appBarShift]: props.open,
+			className={clsx({
+				[classes.appBar]: navVisible,
+				[classes.appBarShift]: open,
+				[classes.appBarHide]: !navVisible,
 			})}
 		>
 			<Toolbar>
@@ -76,7 +83,7 @@ export default function Navbar(props) {
 					edge="start"
 					className={clsx(
 						classes.menuButton,
-						props.open && classes.hide
+						open && classes.hide
 					)}
 				>
 					<MenuIcon />

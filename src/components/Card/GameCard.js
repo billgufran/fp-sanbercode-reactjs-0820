@@ -32,7 +32,7 @@ const useStyles = makeStyles(({breakpoints, spacing}) => ({
 		},
 	},
 	media: {
-		width: "80%",
+		width: "88%",
 		marginLeft: "auto",
 		marginRight: "auto",
 		marginTop: spacing(-3),
@@ -57,31 +57,25 @@ const useStyles = makeStyles(({breakpoints, spacing}) => ({
 	},
 }));
 
-export const MovieCard = React.memo(function MovieCard(props) {
-	const ratingStyle = {
-		width: `50%`,
-		height: "auto",
-		backgroundImage: "linear-gradient(147deg, #fe8a39 0%, #fd3838 74%)",
-		boxShadow: "0px 4px 32px rgba(252, 56, 56, 0.4)",
+export const GameCard = React.memo(function GameCard(props) {
+	const platformStyle = {
+		width: "45%",
+		height: 31,
+		backgroundImage: "linear-gradient(147deg, #39d0fe 0%, #3876fd 74%)",
+		boxShadow: "0px 4px 32px rgba(56, 85, 252, 0.4)",
 		borderRadius: 100,
-		padding: "1px 10px 1px 3px",
+		padding: "5px 10px",
+		verticalAlign: "middle",
 		textAlign: "end",
 		color: "#ffffff",
 		fontSize: "0.75rem",
+		float: "right",
+		fontWeight: "bold",
 	};
 
 	const classes = useStyles();
 	const {...contentStyles} = useBlogTextInfoContentStyles();
 	const shadowStyles = useOverShadowStyles();
-
-	const textTruncate = (string, length = 95, ending = "...") => {
-		if (string === null) return "no description";
-		if (string.length > length) {
-			return string.substring(0, length - ending.length) + ending;
-		} else {
-			return string //add pad
-		}
-	};
 
 	return (
 		<Card
@@ -91,24 +85,24 @@ export const MovieCard = React.memo(function MovieCard(props) {
 			<CardMedia
 				className={classes.media}
 				image={
-					props.movie.image_url !== null
-						? props.movie.image_url
+					props.game.image_url !== null
+						? props.game.image_url
 						: imagePlaceHolder
 				}
 			/>
 			<CardContent>
 				<TextInfoContent
 					classes={contentStyles}
-					overline={props.movie.genre}
-					heading={props.movie.title}
-					body={textTruncate(props.movie.description)}
+					overline={props.game.genre}
+					heading={props.game.name}
+					body={`Platform: ${props.game.platform}`}
 				/>
-				<Typography style={ratingStyle}>
-					<b style={{fontSize: "1.25rem"}}>{props.movie.rating}</b>/10
+				<Typography style={platformStyle}>
+					{props.game.release}
 				</Typography>
 			</CardContent>
 		</Card>
 	);
 });
 
-export default MovieCard;
+export default GameCard;
