@@ -1,12 +1,12 @@
-import { InputAdornment } from "@material-ui/core";
+import { InputAdornment, Snackbar } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import SaveIcon from "@material-ui/icons/Save";
+import { Alert } from "@material-ui/lab";
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../components/Context/AuthContext";
 
 const useStyles = makeStyles(theme => ({
@@ -19,38 +19,49 @@ const useStyles = makeStyles(theme => ({
 	},
 }));
 
-export default function EditMoviePage({match}) {
+export default function AddMovie() {
 	const [movieData, setMovieData] = useState({});
 	const [isValid, setIsValid] = useState(true);
+	const [alert, setAlert] = useState(false);
 	const classes = useStyles();
-	const history = useHistory();
 	const {user} = useContext(AuthContext);
+	const isFirstRun = useRef(true);
+
+	const empty = {
+		title: "",
+		description: "",
+		year: "",
+		duration: "",
+		genre: "",
+		rating: "",
+		image_url: "",
+	};
 
 	useEffect(() => {
-		fetchMovie();
-	}, []);
+		if (isFirstRun.current) {
+			isFirstRun.current = false;
+			return;
+		}
 
-	useEffect(() => {
 		if (movieData.rating > 0 && movieData.rating < 11) {
 			setIsValid(true);
 		} else {
-			setIsValid(false)
+			setIsValid(false);
 		}
 	}, [movieData.rating]);
-
-	const fetchMovie = async () => {
-		const res = await axios.get(
-			`https://backendexample.sanbersy.com/api/data-movie/${match.params.id}`
-		);
-		setMovieData(res.data);
-	};
 
 	const handleChange = event => {
 		setMovieData({...movieData, [event.target.name]: event.target.value});
 	};
 
-	const putData = event => {
-		event.preventDefault();
+	const handleClose = (event, reason) => {
+		if (reason === "clickaway") {
+			return;
+		}
+		setAlert(false);
+	};
+
+	const postData = event => {
 		let {
 			title,
 			description,
@@ -61,20 +72,33 @@ export default function EditMoviePage({match}) {
 			image_url,
 		} = movieData;
 
-		axios.put(
-				`http://backendexample.sanbercloud.com/api/data-movie/${match.params.id}`,
+		axios
+			.post(
+				`http://backendexample.sanbercloud.com/api/data-movie`,
 				{title, description, year, duration, genre, rating, image_url},
 				{headers: {Authorization: `Bearer ${user.token}`}}
 			)
 			.then(() => {
-				history.push("/movies/table")
-				fetchMovie()
+				setAlert(true);
+				setMovieData(empty);
+				isFirstRun.current = true
 			});
+
+		event.preventDefault();
 	};
 
 	return (
 		<div className={classes.root}>
-			<form onSubmit={putData}>
+			<Snackbar
+				open={alert}
+				autoHideDuration={5000}
+				onClose={handleClose}
+			>
+				<Alert onClose={handleClose} severity="success">
+					Data submitted
+				</Alert>
+			</Snackbar>
+			<form onSubmit={postData}>
 				<Grid container spacing={3} item>
 					<Grid item xs={12}>
 						<TextField
@@ -182,7 +206,7 @@ export default function EditMoviePage({match}) {
 						type="submit"
 						disabled={!isValid}
 					>
-						Save
+						Submit
 					</Button>
 				</Grid>
 			</form>

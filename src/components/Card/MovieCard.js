@@ -71,7 +71,10 @@ export const MovieCard = React.memo(function MovieCard(props) {
 	};
 
 	const classes = useStyles();
-	const {...contentStyles} = useBlogTextInfoContentStyles();
+	const {
+		button: buttonStyles,
+		...contentStyles
+	 } = useBlogTextInfoContentStyles();
 	const shadowStyles = useOverShadowStyles();
 
 	const textTruncate = (string, length = 95, ending = "...") => {

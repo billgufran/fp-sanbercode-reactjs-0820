@@ -2,13 +2,17 @@ import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import React, { useContext } from "react";
 import { Route, Switch } from "react-router-dom";
+import { AuthContext } from "./components/Context/AuthContext";
 import DataProvider from "./components/Context/DataContext";
 import { NavContext } from "./components/Context/NavContext";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
+import GamesTable from "./components/Tables/GamesTable";
 import MoviesTable from "./components/Tables/MoviesTable";
+import AddNewItemPage from "./pages/Add/AddNewItemPage";
 import GameDetails from "./pages/Details/GameDetails";
 import MovieDetails from "./pages/Details/MovieDetails";
+import EditGamePage from "./pages/Edit/EditGamePage";
 import EditMoviePage from "./pages/Edit/EditMoviePage";
 import Games from "./pages/Home/Games";
 import HomePage from "./pages/Home/HomePage";
@@ -51,6 +55,7 @@ const useStyles = makeStyles(theme => ({
 export default function App() {
 	const classes = useStyles();
 	const {open, navVisible} = useContext(NavContext);
+	const {isLoggedIn} = useContext(AuthContext)
 
 	return (
 		<div className={classes.root}>
@@ -67,17 +72,21 @@ export default function App() {
 			>
 				<div className={classes.drawerHeader} />
 				<Switch>
+					<Route path="/login" component={LoginPage} />
+					<Route path="/signup" component={SignupPage} />
 					<DataProvider>
 						<Route path="/" exact component={HomePage} />
 						<Route path="/movies" exact component={Movies} />
-						<Route path="/movies/details/:id" component={MovieDetails} />
-						<Route path="/movies/table" component={MoviesTable} />
-						<Route path="/movies/edit/:id" component={EditMoviePage} />
 						<Route path="/games" exact component={Games} />
-						<Route path="/games/details/:id" component={GameDetails} />
+						{/* private */}
+						<Route path="/movies/details/:id" component={isLoggedIn ? MovieDetails : HomePage}/>
+						<Route path="/movies/table" component={isLoggedIn ? MoviesTable : HomePage} />
+						<Route path="/movies/edit/:id" component={isLoggedIn ? EditMoviePage : HomePage} />
+						<Route path="/games/details/:id" component={isLoggedIn ? GameDetails : HomePage} />
+						<Route path="/games/table" component={isLoggedIn ? GamesTable : HomePage} />
+						<Route path="/games/edit/:id" component={isLoggedIn ? EditGamePage : HomePage} />
+						<Route path="/add" component={isLoggedIn ? AddNewItemPage : HomePage} />
 					</DataProvider>
-					<Route path="/login" component={LoginPage} />
-					<Route path="/signup" component={SignupPage} />
 				</Switch>
 			</main>
 		</div>

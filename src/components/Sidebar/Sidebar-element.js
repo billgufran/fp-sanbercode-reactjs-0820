@@ -87,26 +87,32 @@ export function PrivateList() {
 				</ListItem>
 				<Collapse in={open} timeout="auto" unmountOnExit>
 					<List component="div" disablePadding>
-						<ListItem button className={classes.nested}>
-							<ListItemIcon>
-								<MovieIcon />
-							</ListItemIcon>
-							<ListItemText primary="Movies" />
-						</ListItem>
-						<ListItem button className={classes.nested}>
-							<ListItemIcon>
-								<GameIcon />
-							</ListItemIcon>
-							<ListItemText primary="Games" />
-						</ListItem>
+						<Link to="/movies/table">
+							<ListItem button className={classes.nested}>
+								<ListItemIcon>
+									<MovieIcon />
+								</ListItemIcon>
+								<ListItemText primary="Movies" />
+							</ListItem>
+						</Link>
+						<Link to="/games/table">
+							<ListItem button className={classes.nested}>
+								<ListItemIcon>
+									<GameIcon />
+								</ListItemIcon>
+								<ListItemText primary="Games" />
+							</ListItem>
+						</Link>
 					</List>
 				</Collapse>
-				<ListItem button>
-					<ListItemIcon>
-						<AddIcon />
-					</ListItemIcon>
-					<ListItemText primary={"Add new item"} />
-				</ListItem>
+				<Link to="/add">
+					<ListItem button>
+						<ListItemIcon>
+							<AddIcon />
+						</ListItemIcon>
+						<ListItemText primary={"Add new item"} />
+					</ListItem>
+				</Link>
 			</List>
 		</>
 	);

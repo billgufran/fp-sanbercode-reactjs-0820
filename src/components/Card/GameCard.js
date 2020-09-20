@@ -58,8 +58,8 @@ const useStyles = makeStyles(({breakpoints, spacing}) => ({
 }));
 
 export const GameCard = React.memo(function GameCard(props) {
-	const platformStyle = {
-		width: "45%",
+	const yearStyle = {
+		width: 65,
 		height: 31,
 		backgroundImage: "linear-gradient(147deg, #39d0fe 0%, #3876fd 74%)",
 		boxShadow: "0px 4px 32px rgba(56, 85, 252, 0.4)",
@@ -74,7 +74,10 @@ export const GameCard = React.memo(function GameCard(props) {
 	};
 
 	const classes = useStyles();
-	const {...contentStyles} = useBlogTextInfoContentStyles();
+	const {
+		button: buttonStyles,
+		...contentStyles
+	 } = useBlogTextInfoContentStyles();
 	const shadowStyles = useOverShadowStyles();
 
 	return (
@@ -97,7 +100,7 @@ export const GameCard = React.memo(function GameCard(props) {
 					heading={props.game.name}
 					body={`Platform: ${props.game.platform}`}
 				/>
-				<Typography style={platformStyle}>
+				<Typography style={yearStyle}>
 					{props.game.release}
 				</Typography>
 			</CardContent>

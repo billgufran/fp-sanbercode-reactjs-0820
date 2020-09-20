@@ -34,6 +34,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function LoginPage() {
+	console.log('here')
+
 	const {removeNav, restoreNav} = useContext(NavContext);
 	const {setUser, setIsLoggedIn, isLoggedIn} = useContext(AuthContext);
    const [input, setInput] = useState({
@@ -85,7 +87,6 @@ export default function LoginPage() {
 				</Typography>
 				<form
 					className={classes.form}
-					noValidate
 					onSubmit={handleLogin}
 				>
 					<TextField

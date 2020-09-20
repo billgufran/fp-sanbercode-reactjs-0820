@@ -19,56 +19,57 @@ const useStyles = makeStyles(theme => ({
 	},
 }));
 
-export default function EditMoviePage({match}) {
-	const [movieData, setMovieData] = useState({});
-	const [isValid, setIsValid] = useState(true);
+export default function EditGamePage({match}) {
+	const [gameData, setGameData] = useState({});
 	const classes = useStyles();
 	const history = useHistory();
 	const {user} = useContext(AuthContext);
 
+	console.log(user.token)
+
 	useEffect(() => {
-		fetchMovie();
+		fetchGame();
 	}, []);
 
-	useEffect(() => {
-		if (movieData.rating > 0 && movieData.rating < 11) {
-			setIsValid(true);
-		} else {
-			setIsValid(false)
-		}
-	}, [movieData.rating]);
-
-	const fetchMovie = async () => {
+	const fetchGame = async () => {
 		const res = await axios.get(
-			`https://backendexample.sanbersy.com/api/data-movie/${match.params.id}`
+			`https://backendexample.sanbersy.com/api/data-game/${match.params.id}`
 		);
-		setMovieData(res.data);
+		setGameData(res.data);
 	};
 
 	const handleChange = event => {
-		setMovieData({...movieData, [event.target.name]: event.target.value});
+		setGameData({...gameData, [event.target.name]: event.target.value});
 	};
 
 	const putData = event => {
 		event.preventDefault();
 		let {
-			title,
-			description,
-			year,
-			duration,
+			name,
 			genre,
-			rating,
+			release,
+			singlePlayer,
+			multiplayer,
+			platform,
 			image_url,
-		} = movieData;
+		} = gameData;
 
 		axios.put(
-				`http://backendexample.sanbercloud.com/api/data-movie/${match.params.id}`,
-				{title, description, year, duration, genre, rating, image_url},
+				`http://backendexample.sanbercloud.com/api/data-game/${match.params.id}`,
+				{
+					name,
+					genre,
+					release,
+					singlePlayer,
+					multiplayer,
+					platform,
+					image_url,
+				},
 				{headers: {Authorization: `Bearer ${user.token}`}}
 			)
 			.then(() => {
-				history.push("/movies/table")
-				fetchMovie()
+				history.push("/games/table")
+				fetchGame()
 			});
 	};
 
@@ -78,99 +79,96 @@ export default function EditMoviePage({match}) {
 				<Grid container spacing={3} item>
 					<Grid item xs={12}>
 						<TextField
-							label="Title"
-							name="title"
-							id="title"
+							label="Name"
+							name="name"
+							id="name"
 							fullWidth
-							variant="outlined"
-							InputLabelProps={{shrink: true}}
-							value={movieData.title}
+							defaultValue=" "
+							value={gameData.name}
 							onChange={handleChange}
+							variant="outlined"
 						/>
 					</Grid>
-					<Grid item xs={6}>
+					<Grid item xs={4}>
 						<TextField
 							label="Genre"
 							name="genre"
 							id="genre"
 							fullWidth
-							InputLabelProps={{shrink: true}}
-							value={movieData.genre}
+							defaultValue=" "
+							value={gameData.genre}
 							onChange={handleChange}
 							variant="outlined"
 						/>
 					</Grid>
-					<Grid item xs={6}>
+					<Grid item xs={4}>
+						<TextField
+							label="Platform"
+							name="platform"
+							id="platform"
+							fullWidth
+							defaultValue=" "
+							value={gameData.platform}
+							onChange={handleChange}
+							variant="outlined"
+						/>
+					</Grid>
+					<Grid item xs={4}>
 						<TextField
 							label="Image URL"
 							name="image_url"
 							id="image-url"
 							fullWidth
-							InputLabelProps={{shrink: true}}
-							value={movieData.image_url}
+							defaultValue=" "
+							value={gameData.image_url}
 							onChange={handleChange}
 							variant="outlined"
 						/>
 					</Grid>
 					<Grid item xs={4}>
 						<TextField
-							label="Rating"
-							name="rating"
-							id="rating"
+							label="Release"
+							name="release"
+							id="release"
 							fullWidth
-							value={movieData.rating}
+							defaultValue=" "
+							value={gameData.release}
 							onChange={handleChange}
 							variant="outlined"
-							InputLabelProps={{shrink: true}}
-							type="number"
-							error={!isValid}
-							helperText={
-								!isValid && "Rating is out of range [1 - 10]"
-							}
 						/>
 					</Grid>
 					<Grid item xs={4}>
 						<TextField
-							label="Year"
-							name="year"
-							id="year"
+							label="Singleplayer"
+							name="singlePlayer"
+							id="singlePlayer"
 							fullWidth
-							InputLabelProps={{shrink: true}}
-							value={movieData.year}
+							defaultValue=" "
+							value={gameData.singlePlayer}
 							onChange={handleChange}
 							variant="outlined"
-							type="number"
-						/>
-					</Grid>
-					<Grid item xs={4}>
-						<TextField
-							label="Duration"
-							name="duration"
-							id="duration"
-							fullWidth
-							InputLabelProps={{shrink: true}}
-							value={movieData.duration}
-							onChange={handleChange}
-							variant="outlined"
-							type="number"
 							endAdornment={
 								<InputAdornment position="end">
-									minutes
+									Player
 								</InputAdornment>
 							}
 						/>
 					</Grid>
-					<Grid item xs={12}>
+					<Grid item xs={4}>
 						<TextField
-							label="Description"
-							name="description"
-							id="description"
+							label="Multiplayer"
+							name="multiplayer"
+							id="multiplayer"
 							fullWidth
-							multiline
-							InputLabelProps={{shrink: true}}
-							value={movieData.description}
+							defaultValue=" "
+							value={gameData.multiplayer}
 							onChange={handleChange}
 							variant="outlined"
+							endAdornment={
+								<InputAdornment position="end">
+									Player
+								</InputAdornment>
+							}
 						/>
 					</Grid>
 					<Button
@@ -180,7 +178,6 @@ export default function EditMoviePage({match}) {
 						className={classes.button}
 						startIcon={<SaveIcon />}
 						type="submit"
-						disabled={!isValid}
 					>
 						Save
 					</Button>

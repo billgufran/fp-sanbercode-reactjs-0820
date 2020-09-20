@@ -14,7 +14,7 @@ ReactDOM.render(
 		<AuthProvider>
 			<BrowserRouter>
 				<NavProvider>
-					<App />
+						<App />
 				</NavProvider>
 			</BrowserRouter>
 		</AuthProvider>
