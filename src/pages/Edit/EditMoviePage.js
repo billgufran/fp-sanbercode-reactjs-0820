@@ -14,9 +14,6 @@ const useStyles = makeStyles(theme => ({
 		display: "flex",
 		flexFlow: "column wrap",
 	},
-	button: {
-		margin: theme.spacing(1),
-	},
 }));
 
 export default function EditMoviePage({match}) {
@@ -34,7 +31,7 @@ export default function EditMoviePage({match}) {
 		if (movieData.rating > 0 && movieData.rating < 11) {
 			setIsValid(true);
 		} else {
-			setIsValid(false)
+			setIsValid(false);
 		}
 	}, [movieData.rating]);
 
@@ -61,14 +58,15 @@ export default function EditMoviePage({match}) {
 			image_url,
 		} = movieData;
 
-		axios.put(
+		axios
+			.put(
 				`http://backendexample.sanbercloud.com/api/data-movie/${match.params.id}`,
 				{title, description, year, duration, genre, rating, image_url},
 				{headers: {Authorization: `Bearer ${user.token}`}}
 			)
 			.then(() => {
-				history.push("/movies/table")
-				fetchMovie()
+				history.push("/movies/table");
+				fetchMovie();
 			});
 	};
 
@@ -154,8 +152,12 @@ export default function EditMoviePage({match}) {
 							variant="outlined"
 							type="number"
 							InputProps={{
-								endAdornment: <InputAdornment position="end">minutes</InputAdornment>,
-							 }}
+								endAdornment: (
+									<InputAdornment position="end">
+										minutes
+									</InputAdornment>
+								),
+							}}
 						/>
 					</Grid>
 					<Grid item xs={12}>
@@ -171,17 +173,18 @@ export default function EditMoviePage({match}) {
 							variant="outlined"
 						/>
 					</Grid>
-					<Button
-						variant="contained"
-						color="primary"
-						size="large"
-						className={classes.button}
-						startIcon={<SaveIcon />}
-						type="submit"
-						disabled={!isValid}
-					>
-						Save
-					</Button>
+					<Grid item xs={12}>
+						<Button
+							variant="contained"
+							color="primary"
+							size="large"
+							startIcon={<SaveIcon />}
+							type="submit"
+							disabled={!isValid}
+						>
+							Save
+						</Button>
+					</Grid>
 				</Grid>
 			</form>
 		</div>

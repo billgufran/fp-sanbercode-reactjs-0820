@@ -14,9 +14,6 @@ const useStyles = makeStyles(theme => ({
 		display: "flex",
 		flexFlow: "column wrap",
 	},
-	button: {
-		margin: theme.spacing(1),
-	},
 }));
 
 export default function EditGamePage({match}) {
@@ -167,16 +164,17 @@ export default function EditGamePage({match}) {
 							 }}
 						/>
 					</Grid>
+					<Grid item xs={12}>
 					<Button
 						variant="contained"
 						color="primary"
 						size="large"
-						className={classes.button}
 						startIcon={<SaveIcon />}
 						type="submit"
 					>
 						Save
 					</Button>
+					</Grid>
 				</Grid>
 			</form>
 		</div>

@@ -122,7 +122,7 @@ export default function GamesTable() {
 	return (
 		<>
 			<MUIDataTable
-				title={"Movie list"}
+				title={"Game list"}
 				data={data}
 				columns={columns}
 				options={options}

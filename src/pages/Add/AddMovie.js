@@ -14,19 +14,9 @@ const useStyles = makeStyles(theme => ({
 		display: "flex",
 		flexFlow: "column wrap",
 	},
-	button: {
-		margin: theme.spacing(1),
-	},
 }));
 
 export default function AddMovie() {
-	const [movieData, setMovieData] = useState({});
-	const [isValid, setIsValid] = useState(true);
-	const [alert, setAlert] = useState(false);
-	const classes = useStyles();
-	const {user} = useContext(AuthContext);
-	const isFirstRun = useRef(true);
-
 	const empty = {
 		title: "",
 		description: "",
@@ -37,18 +27,33 @@ export default function AddMovie() {
 		image_url: "",
 	};
 
+	const [movieData, setMovieData] = useState(empty);
+	const [isValid, setIsValid] = useState(true);
+	const [formValid, setFormValid] = useState(false);
+	const [alert, setAlert] = useState(false);
+	const classes = useStyles();
+	const {user} = useContext(AuthContext);
+	const isFirstRun = useRef(true);
+
 	useEffect(() => {
 		if (isFirstRun.current) {
 			isFirstRun.current = false;
 			return;
 		}
-
 		if (movieData.rating > 0 && movieData.rating < 11) {
 			setIsValid(true);
 		} else {
 			setIsValid(false);
 		}
 	}, [movieData.rating]);
+
+	useEffect(() => {
+		if (isValid && Object.values(movieData).every(el => el !== "")) {
+			setFormValid(true)
+		} else {
+			setFormValid(false)
+		}
+	}, [isValid, setIsValid, movieData, setMovieData])
 
 	const handleChange = event => {
 		setMovieData({...movieData, [event.target.name]: event.target.value});
@@ -72,16 +77,15 @@ export default function AddMovie() {
 			image_url,
 		} = movieData;
 
-		axios
-			.post(
+		axios.post(
 				`http://backendexample.sanbercloud.com/api/data-movie`,
 				{title, description, year, duration, genre, rating, image_url},
 				{headers: {Authorization: `Bearer ${user.token}`}}
 			)
 			.then(() => {
+				isFirstRun.current = true;
 				setAlert(true);
 				setMovieData(empty);
-				isFirstRun.current = true;
 			});
 
 		event.preventDefault();
@@ -204,10 +208,9 @@ export default function AddMovie() {
 							variant="contained"
 							color="primary"
 							size="large"
-							className={classes.button}
 							startIcon={<SaveIcon />}
 							type="submit"
-							disabled={!isValid}
+							disabled={!formValid}
 						>
 							Submit
 						</Button>

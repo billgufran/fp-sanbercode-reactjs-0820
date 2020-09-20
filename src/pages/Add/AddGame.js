@@ -6,7 +6,7 @@ import TextField from "@material-ui/core/TextField";
 import SaveIcon from "@material-ui/icons/Save";
 import { Alert } from "@material-ui/lab";
 import axios from "axios";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../components/Context/AuthContext";
 
 const useStyles = makeStyles(theme => ({
@@ -14,17 +14,9 @@ const useStyles = makeStyles(theme => ({
 		display: "flex",
 		flexFlow: "column wrap",
 	},
-	button: {
-		margin: theme.spacing(1),
-	},
 }));
 
 export default function AddGame() {
-	const [gameData, setGameData] = useState({});
-	const [alert, setAlert] = useState(false);
-	const classes = useStyles();
-	const {user} = useContext(AuthContext);
-
 	const empty = {
 		name: "",
 		genre: "",
@@ -34,6 +26,20 @@ export default function AddGame() {
 		platform: "",
 		image_url: "",
 	};
+
+	const [gameData, setGameData] = useState(empty);
+	const [formValid, setFormValid] = useState(false);
+	const [alert, setAlert] = useState(false);
+	const classes = useStyles();
+	const {user} = useContext(AuthContext);
+
+	useEffect(() => {
+		if (Object.values(gameData).every(el => el !== "")) {
+			setFormValid(true)
+		} else {
+			setFormValid(false)
+		}
+	}, [gameData, setGameData])
 
 	const handleChange = event => {
 		setGameData({...gameData, [event.target.name]: event.target.value});
@@ -57,8 +63,7 @@ export default function AddGame() {
 			image_url,
 		} = gameData;
 
-		axios
-			.post(
+		axios.post(
 				`http://backendexample.sanbercloud.com/api/data-game`,
 				{
 					name,
@@ -195,9 +200,9 @@ export default function AddGame() {
 							variant="contained"
 							color="primary"
 							size="large"
-							className={classes.button}
 							startIcon={<SaveIcon />}
 							type="submit"
+							disabled={!formValid}
 						>
 							Submit
 						</Button>

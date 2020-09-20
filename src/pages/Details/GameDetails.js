@@ -59,7 +59,7 @@ export default function GameDetails({match}) {
                         <Typography variant="subtitle1"><b>Singleplayer : </b>{gameData.singlePlayer} player</Typography>
                      </Grid>
                      <Grid item xs={12}>
-                        <Typography variant="subtitle1"><b>Multiplayer : </b>{gameData.multiPlayer} player</Typography>
+                        <Typography variant="subtitle1"><b>Multiplayer : </b>{gameData.multiPlayer ? gameData.multiPlayer : '0' } player</Typography>
                      </Grid>
                   </Grid>
                </Paper>
