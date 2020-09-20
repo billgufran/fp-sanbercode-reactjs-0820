@@ -8,7 +8,7 @@ export default function NavProvider(props) {
 
    const removeNav = () => {
       setNavVisible(false)
-      setOpen(true)
+      setOpen(false)
    }
 
    const restoreNav = () => {

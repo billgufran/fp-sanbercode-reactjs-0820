@@ -48,7 +48,6 @@ export function AvatarButton() {
 				open={open}
 				onClose={handleClose}
 			>
-				<MenuItem onClick={handleClose}>Profile</MenuItem>
 				<Link to="/account">
 					<MenuItem>My account</MenuItem>
 				</Link>
@@ -61,7 +60,7 @@ export function AvatarButton() {
 export function LoginButton() {
 	return (
 		<Link to="/login">
-			<Button variant="outlined">Login</Button>
+			<Button style={{color: 'white'}}>Login</Button>
 		</Link>
 	);
 }

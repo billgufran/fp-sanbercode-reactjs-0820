@@ -163,8 +163,12 @@ export default function AddGame() {
 							onChange={handleChange}
 							variant="outlined"
 							InputProps={{
-								endAdornment: <InputAdornment position="end">Player</InputAdornment>,
-							 }}
+								endAdornment: (
+									<InputAdornment position="end">
+										Player
+									</InputAdornment>
+								),
+							}}
 						/>
 					</Grid>
 					<Grid item xs={4}>
@@ -178,20 +182,26 @@ export default function AddGame() {
 							onChange={handleChange}
 							variant="outlined"
 							InputProps={{
-								endAdornment: <InputAdornment position="end">Player</InputAdornment>,
-							 }}
+								endAdornment: (
+									<InputAdornment position="end">
+										Player
+									</InputAdornment>
+								),
+							}}
 						/>
 					</Grid>
-					<Button
-						variant="contained"
-						color="primary"
-						size="large"
-						className={classes.button}
-						startIcon={<SaveIcon />}
-						type="submit"
-					>
-						Submit
-					</Button>
+					<Grid item xs={12}>
+						<Button
+							variant="contained"
+							color="primary"
+							size="large"
+							className={classes.button}
+							startIcon={<SaveIcon />}
+							type="submit"
+						>
+							Submit
+						</Button>
+					</Grid>
 				</Grid>
 			</form>
 		</div>

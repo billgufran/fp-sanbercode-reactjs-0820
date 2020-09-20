@@ -81,7 +81,7 @@ export default function AddMovie() {
 			.then(() => {
 				setAlert(true);
 				setMovieData(empty);
-				isFirstRun.current = true
+				isFirstRun.current = true;
 			});
 
 		event.preventDefault();
@@ -178,8 +178,12 @@ export default function AddMovie() {
 							variant="outlined"
 							type="number"
 							InputProps={{
-								endAdornment: <InputAdornment position="end">minutes</InputAdornment>,
-							 }}
+								endAdornment: (
+									<InputAdornment position="end">
+										minutes
+									</InputAdornment>
+								),
+							}}
 						/>
 					</Grid>
 					<Grid item xs={12}>
@@ -195,17 +199,19 @@ export default function AddMovie() {
 							variant="outlined"
 						/>
 					</Grid>
-					<Button
-						variant="contained"
-						color="primary"
-						size="large"
-						className={classes.button}
-						startIcon={<SaveIcon />}
-						type="submit"
-						disabled={!isValid}
-					>
-						Submit
-					</Button>
+					<Grid item xs={12}>
+						<Button
+							variant="contained"
+							color="primary"
+							size="large"
+							className={classes.button}
+							startIcon={<SaveIcon />}
+							type="submit"
+							disabled={!isValid}
+						>
+							Submit
+						</Button>
+					</Grid>
 				</Grid>
 			</form>
 		</div>

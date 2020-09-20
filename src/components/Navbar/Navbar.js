@@ -17,6 +17,9 @@ const useStyles = makeStyles(theme => ({
 		display: "flex",
 	},
 	appBar: {
+		// backgroundColor: 'grey',
+		// background: "linear-gradient(45deg, #CA4246 16.666%, #ca4246 16.666%, #ca5009 33.333%, #E16541 33.333%, #E16541 50%,#d16716 50%, #d83c0c 66.666%, #d83c0c 66.666%, #CA4246 83.333%, #a53a37 83.333%)",
+		background: "linear-gradient(to right, #499bea 0%, #207ce5 100%)",
 		transition: theme.transitions.create(["margin", "width"], {
 			easing: theme.transitions.easing.sharp,
 			duration: theme.transitions.duration.leavingScreen,
@@ -31,7 +34,7 @@ const useStyles = makeStyles(theme => ({
 		}),
 	},
 	appBarHide: {
-		display: 'none',
+		display: "none",
 	},
 	menuButton: {
 		marginRight: theme.spacing(2),
@@ -39,27 +42,18 @@ const useStyles = makeStyles(theme => ({
 	hide: {
 		display: "none",
 	},
-	content: {
+	title: {
 		flexGrow: 1,
-		padding: theme.spacing(3),
-		transition: theme.transitions.create("margin", {
-			easing: theme.transitions.easing.sharp,
-			duration: theme.transitions.duration.leavingScreen,
-		}),
-		marginLeft: -drawerWidth,
-	},
-	contentShift: {
-		transition: theme.transitions.create("margin", {
-			easing: theme.transitions.easing.easeOut,
-			duration: theme.transitions.duration.enteringScreen,
-		}),
-		marginLeft: 0,
+		// backgroundColor: "linear-gradient(45deg, #CA4246 16.666%, #ca4246 16.666%, #ca5009 33.333%, #E16541 33.333%, #E16541 50%,#d16716 50%, #d83c0c 66.666%, #d83c0c 66.666%, #CA4246 83.333%, #a53a37 83.333%)",
+		// backgroundSize: "100%",
+  		// backgroundRepeat: "repeat",
+  		// backgroundClip: "text",
 	},
 }));
 
 export default function Navbar() {
 	const classes = useStyles();
-	const { isLoggedIn } = useContext(AuthContext);
+	const {isLoggedIn} = useContext(AuthContext);
 	const {open, setOpen, navVisible} = useContext(NavContext);
 
 	const handleDrawerOpen = () => {
@@ -67,48 +61,35 @@ export default function Navbar() {
 	};
 
 	return (
-		<AppBar
-			position="fixed"
-			className={clsx({
-				[classes.appBar]: navVisible,
-				[classes.appBarShift]: open,
-				[classes.appBarHide]: !navVisible,
-			})}
-		>
-			<Toolbar>
-				<IconButton
-					color="inherit"
-					aria-label="open drawer"
-					onClick={handleDrawerOpen}
-					edge="start"
-					className={clsx(
-						classes.menuButton,
-						open && classes.hide
-					)}
-				>
-					<MenuIcon />
-				</IconButton>
-				<Typography variant="h6" noWrap>
-					Persistent drawer
-				</Typography>
-				{isLoggedIn ? <AvatarButton /> : <LoginButton />}
-			</Toolbar>
-		</AppBar>
+		<div className={classes.root}>
+			<AppBar
+				// color="black"
+				position="fixed"
+				className={clsx({
+					[classes.appBar]: navVisible,
+					[classes.appBarShift]: open,
+					[classes.appBarHide]: !navVisible,
+				})}
+			>
+				<Toolbar>
+					<IconButton
+						color="inherit"
+						aria-label="open drawer"
+						onClick={handleDrawerOpen}
+						edge="start"
+						className={clsx(
+							classes.menuButton,
+							open && classes.hide
+						)}
+					>
+						<MenuIcon />
+					</IconButton>
+					<Typography variant="h6" noWrap className={classes.title}>
+						MovieGame Database
+					</Typography>
+					{isLoggedIn ? <AvatarButton /> : <LoginButton />}
+				</Toolbar>
+			</AppBar>
+		</div>
 	);
 }
-
-// import React from "react";
-// import NavbarAlt from "./components/Navbar/NavbarAlt";
-// import HomePage from "./pages/HomePage/HomePage";
-
-// function App() {
-// 	return (
-// 		<div className="App">
-// 			<NavbarAlt/>
-// 			{/* <Navbar/> */}
-// 			<HomePage />
-// 		</div>
-// 	);
-// }
-
-// export default App;

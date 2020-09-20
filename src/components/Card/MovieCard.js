@@ -59,15 +59,18 @@ const useStyles = makeStyles(({breakpoints, spacing}) => ({
 
 export const MovieCard = React.memo(function MovieCard(props) {
 	const ratingStyle = {
-		width: `50%`,
-		height: "auto",
-		backgroundImage: "linear-gradient(147deg, #fe8a39 0%, #fd3838 74%)",
-		boxShadow: "0px 4px 32px rgba(252, 56, 56, 0.4)",
+		width: 70,
+		height: 31,
+		backgroundImage: "linear-gradient(147deg, #6d39fe 0%, #383bfd 74%)",
+		boxShadow: "0px 4px 32px rgba(125, 56, 252, 0.4)",
 		borderRadius: 100,
-		padding: "1px 10px 1px 3px",
+		padding: "4px 10px 8px 10px",
+		verticalAlign: "middle",
 		textAlign: "end",
 		color: "#ffffff",
 		fontSize: "0.75rem",
+		float: "right",
+		fontWeight: "bold",
 	};
 
 	const classes = useStyles();
@@ -107,7 +110,7 @@ export const MovieCard = React.memo(function MovieCard(props) {
 					body={textTruncate(props.movie.description)}
 				/>
 				<Typography style={ratingStyle}>
-					<b style={{fontSize: "1.25rem"}}>{props.movie.rating}</b>/10
+					<b style={{fontSize: "1rem"}}>{props.movie.rating}</b>/10
 				</Typography>
 			</CardContent>
 		</Card>

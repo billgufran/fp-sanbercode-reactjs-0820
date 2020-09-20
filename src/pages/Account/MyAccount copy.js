@@ -1,10 +1,10 @@
 import {
+	Box,
 	Button,
-	Grid,
+	Container,
 	makeStyles,
 	Snackbar,
-	TextField,
-	Typography
+	TextField
 } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import axios from "axios";
@@ -12,9 +12,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../components/Context/AuthContext";
 
 const useStyles = makeStyles(theme => ({
-	root: {
-		display: "flex",
-		flexFlow: "column nowrap",
+	box: {
+		marginBottom: 15,
 	},
 }));
 
@@ -28,7 +27,7 @@ export default function MyAccount() {
 	const [input, setInput] = useState(inputDefault);
 	const [isValid, setIsValid] = useState({password: true, passMatch: true});
 	const [formValid, setFormValid] = useState(false);
-	const [openSnackbar, setOpenSnackbar] = useState("");
+   const [openSnackbar, setOpenSnackbar] = useState('');
 	const {user} = useContext(AuthContext);
 	const classes = useStyles();
 
@@ -70,8 +69,7 @@ export default function MyAccount() {
 		event.preventDefault();
 		let {current_password, new_password, new_confirm_pasword} = input;
 
-		axios
-			.post(
+		axios.post(
 				`https://backendexample.sanbersy.com/api/change-password`,
 				{
 					current_password,
@@ -81,14 +79,14 @@ export default function MyAccount() {
 				{headers: {Authorization: `Bearer ${user.token}`}}
 			)
 			.then(() => {
-				setInput(inputDefault);
-				setOpenSnackbar("success");
-				setFormValid(false);
-			})
-			.catch(() => {
-				setFormValid(false);
-				setOpenSnackbar("error");
-			});
+            setInput(inputDefault);
+            setOpenSnackbar('success')
+            setFormValid(false)
+         })
+         .catch(() => {
+            setFormValid(false)
+            setOpenSnackbar('error')
+         })
 	};
 
 	const handleChange = event => {
@@ -103,9 +101,9 @@ export default function MyAccount() {
 	};
 
 	return (
-		<div className={classes.root}>
+		<>
 			<Snackbar
-				open={openSnackbar === "error"}
+				open={openSnackbar === 'error'}
 				autoHideDuration={5000}
 				onClose={handleClose}
 			>
@@ -114,7 +112,7 @@ export default function MyAccount() {
 				</Alert>
 			</Snackbar>
 			<Snackbar
-				open={openSnackbar === "success"}
+				open={openSnackbar === 'success'}
 				autoHideDuration={5000}
 				onClose={handleClose}
 			>
@@ -122,34 +120,28 @@ export default function MyAccount() {
 					Password updated
 				</Alert>
 			</Snackbar>
-			<form onSubmit={changePass}>
-				<Grid container spacing={3} item>
-					<Grid item xs={12} style={{marginBottom: 45, marginTop: 20}}>
-						<Typography gutterBottom variant="h3">Hello {user.name}</Typography>
-					</Grid>
-					<Grid item xs={6}>
+			<Container>
+				<Box className={classes.box}>
+					<TextField
+						disabled
+						id="username"
+						label="Username"
+						defaultValue={user.name}
+						variant="outlined"
+					/>
+				</Box>
+				<Box className={classes.box}>
+					<TextField
+						disabled
+						id="email"
+						label="Email"
+						defaultValue={user.email}
+						variant="outlined"
+					/>
+				</Box>
+				<form onSubmit={changePass}>
+					<Box className={classes.box}>
 						<TextField
-							fullWidth
-							disabled
-							id="username"
-							label="Username"
-							defaultValue={user.name}
-							variant="outlined"
-						/>
-					</Grid>
-					<Grid item xs={6}>
-						<TextField
-							fullWidth
-							disabled
-							id="email"
-							label="Email"
-							defaultValue={user.email}
-							variant="outlined"
-						/>
-					</Grid>
-					<Grid item xs={4}>
-						<TextField
-							fullWidth
 							required
 							id="current_password"
 							name="current_password"
@@ -159,10 +151,9 @@ export default function MyAccount() {
 							type="password"
 							onChange={handleChange}
 						/>
-					</Grid>
-					<Grid item xs={4}>
+					</Box>
+					<Box className={classes.box}>
 						<TextField
-							fullWidth
 							required
 							id="new_password"
 							name="new_password"
@@ -177,10 +168,9 @@ export default function MyAccount() {
 								"Password must include non-whitespace character"
 							}
 						/>
-					</Grid>
-					<Grid item xs={4}>
+					</Box>
+					<Box className={classes.box}>
 						<TextField
-							fullWidth
 							required
 							id="new_confirm_password"
 							name="new_confirm_password"
@@ -194,8 +184,8 @@ export default function MyAccount() {
 								!isValid.passMatch && "Password should match"
 							}
 						/>
-					</Grid>
-					<Grid item xs={12}>
+					</Box>
+					<Box className={classes.box}>
 						<Button
 							type="submit"
 							color="primary"
@@ -203,9 +193,9 @@ export default function MyAccount() {
 						>
 							Change Password
 						</Button>
-					</Grid>
-				</Grid>
-			</form>
-		</div>
+					</Box>
+				</form>
+			</Container>
+		</>
 	);
 }

@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     color: theme.palette.text.secondary,
+    marginLeft: 15,
   },
 }));
 
@@ -32,7 +33,6 @@ export default function MovieDetails({match}) {
    const imageStyle = {
       width: 'auto',
       height: '75vh',
-      // maxHeight: 500,
       backgroundImage: `url(${movieData.image_url})`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
