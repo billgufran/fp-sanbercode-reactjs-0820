@@ -162,11 +162,9 @@ export default function AddGame() {
 							value={gameData.singlePlayer}
 							onChange={handleChange}
 							variant="outlined"
-							endAdornment={
-								<InputAdornment position="end">
-									Player
-								</InputAdornment>
-							}
+							InputProps={{
+								endAdornment: <InputAdornment position="end">Player</InputAdornment>,
+							 }}
 						/>
 					</Grid>
 					<Grid item xs={4}>
@@ -179,11 +177,9 @@ export default function AddGame() {
 							value={gameData.multiplayer}
 							onChange={handleChange}
 							variant="outlined"
-							endAdornment={
-								<InputAdornment position="end">
-									Player
-								</InputAdornment>
-							}
+							InputProps={{
+								endAdornment: <InputAdornment position="end">Player</InputAdornment>,
+							 }}
 						/>
 					</Grid>
 					<Button

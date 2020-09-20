@@ -3,12 +3,13 @@ import clsx from "clsx";
 import React, { useContext } from "react";
 import { Route, Switch } from "react-router-dom";
 import { AuthContext } from "./components/Context/AuthContext";
-import DataProvider from "./components/Context/DataContext";
+// import DataProvider from "./components/Context/DataContext";
 import { NavContext } from "./components/Context/NavContext";
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
 import GamesTable from "./components/Tables/GamesTable";
 import MoviesTable from "./components/Tables/MoviesTable";
+import MyAccount from "./pages/Account/MyAccount";
 import AddNewItemPage from "./pages/Add/AddNewItemPage";
 import GameDetails from "./pages/Details/GameDetails";
 import MovieDetails from "./pages/Details/MovieDetails";
@@ -74,7 +75,8 @@ export default function App() {
 				<Switch>
 					<Route path="/login" component={LoginPage} />
 					<Route path="/signup" component={SignupPage} />
-					<DataProvider>
+					<Route path="/account" component={isLoggedIn ? MyAccount : HomePage}/>
+					{/* <DataProvider> */}
 						<Route path="/" exact component={HomePage} />
 						<Route path="/movies" exact component={Movies} />
 						<Route path="/games" exact component={Games} />
@@ -86,7 +88,7 @@ export default function App() {
 						<Route path="/games/table" component={isLoggedIn ? GamesTable : HomePage} />
 						<Route path="/games/edit/:id" component={isLoggedIn ? EditGamePage : HomePage} />
 						<Route path="/add" component={isLoggedIn ? AddNewItemPage : HomePage} />
-					</DataProvider>
+					{/* </DataProvider> */}
 				</Switch>
 			</main>
 		</div>

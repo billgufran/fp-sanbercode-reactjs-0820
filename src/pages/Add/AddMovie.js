@@ -177,11 +177,9 @@ export default function AddMovie() {
 							onChange={handleChange}
 							variant="outlined"
 							type="number"
-							endAdornment={
-								<InputAdornment position="end">
-									minutes
-								</InputAdornment>
-							}
+							InputProps={{
+								endAdornment: <InputAdornment position="end">minutes</InputAdornment>,
+							 }}
 						/>
 					</Grid>
 					<Grid item xs={12}>

@@ -49,7 +49,9 @@ export function AvatarButton() {
 				onClose={handleClose}
 			>
 				<MenuItem onClick={handleClose}>Profile</MenuItem>
-				<MenuItem onClick={handleClose}>My account</MenuItem>
+				<Link to="/account">
+					<MenuItem>My account</MenuItem>
+				</Link>
 				<MenuItem onClick={logout}>Logout</MenuItem>
 			</Menu>
 		</div>

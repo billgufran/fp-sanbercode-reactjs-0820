@@ -43,7 +43,7 @@ export default function GameDetails({match}) {
                <Paper style={imageStyle} elevation={0}/>
             </Grid>
             <Grid item xs>
-               <Paper className={classes.paper} elevation={9}>
+               <Paper className={classes.paper} elevation={7}>
                   <Grid container direction="column">
                      <Grid item xs={12}>
                         <Typography gutterBottom variant="h4">{gameData.name}</Typography>

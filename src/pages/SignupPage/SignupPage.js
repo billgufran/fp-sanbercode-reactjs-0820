@@ -77,10 +77,8 @@ export default function SignupPage() {
 				)
 			) {
 				setIsValid({...isValid, email: true});
-				console.log(isValid.email);
 			} else {
 				setIsValid({...isValid, email: false});
-				console.log(isValid.email);
 			}
 		}
 	}, [input.email]);
@@ -100,19 +98,17 @@ export default function SignupPage() {
 		if (input.password !== "" && input.confirmPassword !== "") {
 			if (input.password !== input.confirmPassword) {
 				setIsValid({...isValid, passMatch: false});
-				console.log(isValid);
 			} else {
 				setIsValid({...isValid, passMatch: true});
-				console.log(isValid);
 			}
 		}
 	}, [input.password, input.confirmPassword]);
 
 	//Confirm validation
+	//Check if all isValid value is true
 	useEffect(() => {
 		if (Object.values(input).every(el => el !== "")) {
 			if (Object.values(isValid).every(el => el === true)) {
-				console.log("whop");
 				setFormValid(true);
 			} else {
 				setFormValid(false);
@@ -120,7 +116,7 @@ export default function SignupPage() {
 		} else {
 			setFormValid(false);
 		}
-	});
+	}, [isValid, setIsValid]);
 
 	const handleSignup = event => {
 		event.preventDefault();
