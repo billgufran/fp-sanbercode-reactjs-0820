@@ -78,7 +78,7 @@ export default function Navbar() {
 						<MenuIcon />
 					</IconButton>
 					<Typography variant="h6" noWrap className={classes.title}>
-						MovieGame Database
+						MoviesGames List
 					</Typography>
 					{isLoggedIn ? <AvatarButton /> : <LoginButton />}
 				</Toolbar>
