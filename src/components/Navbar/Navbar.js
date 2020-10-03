@@ -17,8 +17,6 @@ const useStyles = makeStyles(theme => ({
 		display: "flex",
 	},
 	appBar: {
-		// backgroundColor: 'grey',
-		// background: "linear-gradient(45deg, #CA4246 16.666%, #ca4246 16.666%, #ca5009 33.333%, #E16541 33.333%, #E16541 50%,#d16716 50%, #d83c0c 66.666%, #d83c0c 66.666%, #CA4246 83.333%, #a53a37 83.333%)",
 		background: "linear-gradient(to right, #499bea 0%, #207ce5 100%)",
 		transition: theme.transitions.create(["margin", "width"], {
 			easing: theme.transitions.easing.sharp,
@@ -44,10 +42,6 @@ const useStyles = makeStyles(theme => ({
 	},
 	title: {
 		flexGrow: 1,
-		// backgroundColor: "linear-gradient(45deg, #CA4246 16.666%, #ca4246 16.666%, #ca5009 33.333%, #E16541 33.333%, #E16541 50%,#d16716 50%, #d83c0c 66.666%, #d83c0c 66.666%, #CA4246 83.333%, #a53a37 83.333%)",
-		// backgroundSize: "100%",
-  		// backgroundRepeat: "repeat",
-  		// backgroundClip: "text",
 	},
 }));
 
@@ -63,7 +57,6 @@ export default function Navbar() {
 	return (
 		<div className={classes.root}>
 			<AppBar
-				// color="black"
 				position="fixed"
 				className={clsx({
 					[classes.appBar]: navVisible,
